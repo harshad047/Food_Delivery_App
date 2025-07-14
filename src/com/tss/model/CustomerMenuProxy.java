@@ -2,6 +2,9 @@ package com.tss.model;
 
 import java.util.List;
 
+import com.tss.model.food.FoodItem;
+import com.tss.model.food.IMenu;
+
 public class CustomerMenuProxy implements IMenu {
     private IMenu realMenu;
 

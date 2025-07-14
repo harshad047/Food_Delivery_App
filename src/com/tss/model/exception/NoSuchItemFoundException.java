@@ -1,4 +1,4 @@
-package com.tss.exception;
+package com.tss.model.exception;
 
 public class NoSuchItemFoundException extends RuntimeException{
 	

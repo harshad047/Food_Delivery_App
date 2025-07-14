@@ -1,5 +1,4 @@
-package com.tss.model;
-
+package com.tss.model.food;
 import java.util.List;
 
 public interface IMenu {

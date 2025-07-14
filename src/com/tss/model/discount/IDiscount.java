@@ -1,4 +1,4 @@
-package com.tss.model;
+package com.tss.model.discount;
 
 public interface IDiscount {
 	double applyDiscount(double totalAmount);

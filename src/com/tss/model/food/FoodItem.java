@@ -1,4 +1,4 @@
-package com.tss.model;
+package com.tss.model.food;
 
 import java.io.Serializable;
 
