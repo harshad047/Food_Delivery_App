@@ -4,10 +4,6 @@ import java.util.Scanner;
 
 public class CreditCard implements IPayment {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private long cardNumber;
     private String cardHolder;
     private int pin;

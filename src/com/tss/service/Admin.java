@@ -28,7 +28,7 @@ public class Admin {
 		this.deliveryPartnerManager = deliveryPartnerManager;
 	}
 
-	public void start(String userName) {
+	public void manageAdmin(String userName) {
 		boolean adminExit = false;
 		
 		System.out.println("\n+----------------------------------------+");
@@ -39,7 +39,7 @@ public class Admin {
 			System.out.println("\n+-----------------------------+");
 			System.out.println("|         Admin Menu          |");
 			System.out.println("+-----------------------------+");
-			System.out.println("| 1. Manage Menu              |");
+			System.out.println("| 1. Manage Food Menu         |");
 			System.out.println("| 2. Manage Discount          |");
 			System.out.println("| 3. Manage Delivery Partners |");
 			System.out.println("| 4. Exit                     |");
@@ -59,7 +59,15 @@ public class Admin {
 	}
 
 	private void manageMenu() {
-		System.out.println("Select Cuisine: 1. Italian 2. Indian 3. Korean");
+		System.out.println("+-----------------------------------------+");
+		System.out.println("|           Select Cuisine                |");
+		System.out.println("+-----------------------------------------+");
+		System.out.printf("| 1. Italian                              |\n");
+		System.out.printf("| 2. Indian                               |\n");
+		System.out.printf("| 3. Korean                               |\n");
+		System.out.println("+-----------------------------------------+");
+		
+		System.out.print("Choose: ");
 		int cuisineChoice = scanner.nextInt();
 		scanner.nextLine();
 		FoodCusine selected = switch (cuisineChoice) {
@@ -78,7 +86,18 @@ public class Admin {
 
 		boolean menuExit = false;
 		while (!menuExit) {
-			System.out.println("\n1. Add Item\n2. Remove Item\n3. Edit Item\n4. View Menu\n5. Back");
+			System.out.println("\n+-----------------------------+");
+			System.out.println("|       Admin Food Menu       |");
+			System.out.println("+-----------------------------+");
+			System.out.printf("| 1. Add Item                 |\n");
+			System.out.printf("| 2. Remove Item              |\n");
+			System.out.printf("| 3. Edit Item                |\n");
+			System.out.printf("| 4. View Menu                |\n");
+			System.out.printf("| 5. Back                     |\n");
+			System.out.println("+-----------------------------+");
+
+			
+			System.out.print("Choose: ");
 			int menuChoice = scanner.nextInt();
 			scanner.nextLine();
 			switch (menuChoice) {
@@ -91,15 +110,16 @@ public class Admin {
 			}
 			case 2 -> {
 				try {
-					System.out.print("Enter ID to remove: ");
-					menu.removeItem(scanner.nextInt());
-					scanner.nextLine();
+					
+					MenuPrinter.printMenu(menu);
+					menu.removeItem();
 				} catch (NoItemInListException | NoSuchItemFoundException e) {
 					System.out.println(e.getMessage());
 				}
 			}
 			case 3 -> {
 				try {
+					MenuPrinter.printMenu(menu);
 					System.out.print("Enter ID to edit: ");
 					menu.editItem(scanner.nextInt());
 					scanner.nextLine();
@@ -117,11 +137,16 @@ public class Admin {
 	private void manageDiscount() {
 		boolean back = false;
 		while (!back) {
-			System.out.println("\n1. Add/Edit Discount");
-			System.out.println("2. Remove Discount");
-			System.out.println("3. View Discount");
-			System.out.println("4. Back");
+			System.out.println("\n+-----------------------------+");
+			System.out.println("|       Discount Menu         |");
+			System.out.println("+-----------------------------+");
+			System.out.printf("| 1. Add/Edit Discount        |\n");
+			System.out.printf("| 2. Remove Discount          |\n");
+			System.out.printf("| 3. View Discount            |\n");
+			System.out.printf("| 4. Back                     |\n");
+			System.out.println("+-----------------------------+");
 			System.out.print("Choose: ");
+
 			int choice1 = scanner.nextInt();
 			scanner.nextLine();
 			switch (choice1) {
@@ -147,11 +172,16 @@ public class Admin {
 	private void manageDeliveryPartners() {
 		boolean back = false;
 		while (!back) {
-			System.out.println("\n1. Add Delivery Partner");
-			System.out.println("2. Remove Delivery Partner");
-			System.out.println("3. View Delivery Partners");
-			System.out.println("4. Back");
+			System.out.println("\n+--------------------------------------+");
+			System.out.println("|        Delivery Partner Menu         |");
+			System.out.println("+--------------------------------------+");
+			System.out.printf("| 1. Add Delivery Partner              |\n");
+			System.out.printf("| 2. Remove Delivery Partner           |\n");
+			System.out.printf("| 3. View Delivery Partners            |\n");
+			System.out.printf("| 4. Back                              |\n");
+			System.out.println("+--------------------------------------+");
 			System.out.print("Choose: ");
+
 			int choice = scanner.nextInt();
 			scanner.nextLine();
 			switch (choice) {
@@ -184,5 +214,6 @@ public class Admin {
 			default -> System.out.println("Invalid choice.");
 			}
 		}
+		return;
 	}
 }

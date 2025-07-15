@@ -1,8 +1,6 @@
 package com.tss.model.payment;
 
-import java.io.Serializable;
-
-public interface IPayment extends Serializable{
+public interface IPayment {
 	
 	boolean processPayment(double amount);
 

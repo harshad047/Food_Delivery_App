@@ -3,7 +3,7 @@ import java.util.List;
 
 public interface IMenu {
 	void addItem();
-	void removeItem(int id);
+	void removeItem();
 	void editItem(int id);
 	 List<FoodItem> getMenuItems();
 }
