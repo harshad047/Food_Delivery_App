@@ -12,6 +12,7 @@ import com.tss.model.repositary.Repositary;
 import com.tss.service.Admin;
 import com.tss.service.Client;
 import com.tss.service.Customer;
+import com.tss.service.CustomerProfileManager;
 import com.tss.service.RegisterCustomer;
 
 public class AuthenticationProxy {
@@ -34,31 +35,47 @@ public class AuthenticationProxy {
         } else {
             Customer existingCustomer = isCustomer(username, password);
             if (existingCustomer != null) {
+                // NEW: Let the customer update profile
+                CustomerProfileManager.manageCustomerProfile(existingCustomer, scanner);
+
+                // Save updated info
+                List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
+                for (int i = 0; i < customers.size(); i++) {
+                    if (customers.get(i).getName().equals(existingCustomer.getName())) {
+                        customers.set(i, existingCustomer);
+                        break;
+                    }
+                }
+                Repositary.saveToFile(customers, CUSTOMER_FILE);
+
                 Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, existingCustomer);
                 client.start();
-            } else {
-                System.out.println("No account found.");
-                System.out.print("Do you want to create a new account? (yes/no): ");
-                String choice = scanner.nextLine().trim().toLowerCase();
-                if (choice.equals("yes")) {
-                    Customer newCustomer = RegisterCustomer.registerNewCustomer(scanner);
-                    if (newCustomer != null) {
-                        List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
-                        if (customers == null) {
-                            customers = new ArrayList<>();
-                        }
-                        customers.add(newCustomer);
-                        Repositary.saveToFile(customers, CUSTOMER_FILE);
-
-                        Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, newCustomer);
-                        client.start();
-                    } else {
-                        System.out.println("Registration failed. Exiting...");
-                    }
-                } else {
-                    System.out.println("Goodbye!");
-                }
+                return;
             }
+
+            System.out.println("No account found.");
+            System.out.print("Do you want to create a new account? (yes/no): ");
+            String choice = scanner.nextLine().trim().toLowerCase();
+            if (choice.equals("no")) {
+                System.out.println("Goodbye!");
+                return;
+            }
+
+            Customer newCustomer = RegisterCustomer.registerNewCustomer(scanner);
+            if (newCustomer != null) {
+                List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
+                if (customers == null) {
+                    customers = new ArrayList<>();
+                }
+                customers.add(newCustomer);
+                Repositary.saveToFile(customers, CUSTOMER_FILE);
+
+                Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, newCustomer);
+                client.start();
+                return;
+            }
+
+            System.out.println("Registration failed. Exiting...");
         }
     }
 

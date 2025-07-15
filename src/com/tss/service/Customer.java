@@ -35,4 +35,22 @@ public class Customer implements Serializable {
     public String toString() {
         return "Customer ID: " + id + ", Name: " + name + ", Address: " + address;
     }
+
+	public static void setIdCounter(int idCounter) {
+		Customer.idCounter = idCounter;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
 }
