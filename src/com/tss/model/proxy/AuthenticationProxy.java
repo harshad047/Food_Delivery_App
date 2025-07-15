@@ -31,7 +31,7 @@ public class AuthenticationProxy {
 
         if (authProxy.isAdmin(username, password)) {
             Admin admin = new Admin(scanner, foodMenuFactory, discountManager, deliveryPartnerManager);
-            admin.start();
+            admin.start(username);
         } else {
             Customer existingCustomer = isCustomer(username, password);
             if (existingCustomer != null) {

@@ -139,11 +139,11 @@ public class Client {
 									assignedPartner);
 
 							System.out.println("Thank you for ordering with us!");
-							return; // Exit after checkout
+							return;
 						}
 					}
 					case 5 -> {
-						inCuisine = false; // Back to cuisine selection
+						inCuisine = false; 
 					}
 					default -> System.out.println("Invalid option.");
 					}

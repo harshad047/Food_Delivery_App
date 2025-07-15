@@ -28,15 +28,22 @@ public class Admin {
 		this.deliveryPartnerManager = deliveryPartnerManager;
 	}
 
-	public void start() {
+	public void start(String userName) {
 		boolean adminExit = false;
+		
+		System.out.println("\n+----------------------------------------+");
+		System.out.printf ("|  Welcome %s! You are Admin!!      |\n", userName);
+		System.out.println("+----------------------------------------+");
 
 		while (!adminExit) {
-			System.out.println("\n--- Admin Menu ---");
-			System.out.println("1. Manage Menu");
-			System.out.println("2. Manage Discount");
-			System.out.println("3. Manage Delivery Partners");
-			System.out.println("4. Exit");
+			System.out.println("\n+-----------------------------+");
+			System.out.println("|         Admin Menu          |");
+			System.out.println("+-----------------------------+");
+			System.out.println("| 1. Manage Menu              |");
+			System.out.println("| 2. Manage Discount          |");
+			System.out.println("| 3. Manage Delivery Partners |");
+			System.out.println("| 4. Exit                     |");
+			System.out.println("+-----------------------------+");
 			System.out.print("Choose: ");
 			int choice = scanner.nextInt();
 			scanner.nextLine();
