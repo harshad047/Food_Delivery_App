@@ -8,6 +8,7 @@ public class Repositary {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(object);
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
