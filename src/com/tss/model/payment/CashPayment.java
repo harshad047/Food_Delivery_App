@@ -1,20 +1,16 @@
 package com.tss.model.payment;
 
-public class CashPayment implements IPayment {
-
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class CashPayment implements IPayment{
 
 	@Override
-    public void processPayment(double amount) {
-        System.out.println("Collect " + amount + " in cash.");
-    }
+	public boolean processPayment(double amount) {
+		System.out.println("Payment Is Done Through Cash :" + amount);
+		return true;
+	}
 
-    @Override
-    public boolean validatePaymentDetails() {
-        // Cash does not need validation
-        return true;
-    }
+	@Override
+	public boolean validatePaymentDetails() {
+		return true;
+	}
+
 }

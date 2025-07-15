@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public interface IPayment extends Serializable{
 	
-	void processPayment(double amount);
+	boolean processPayment(double amount);
 
 	boolean validatePaymentDetails();
 }

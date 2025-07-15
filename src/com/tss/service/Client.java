@@ -4,10 +4,16 @@ import java.util.Scanner;
 
 import com.tss.model.deliverypartner.DeliveryPartnerManager;
 import com.tss.model.discount.IDiscountManager;
-import com.tss.model.food.*;
+import com.tss.model.food.FoodCusine;
+import com.tss.model.food.FoodItem;
+import com.tss.model.food.FoodMenu;
+import com.tss.model.food.FoodMenuFactory;
+import com.tss.model.food.IMenu;
 import com.tss.model.menuPrinter.MenuPrinter;
 import com.tss.model.order.Order;
 import com.tss.model.order.OrderItem;
+import com.tss.model.payment.ChoosePaymentMethod;
+import com.tss.model.payment.IPayment;
 
 public class Client {
 
@@ -74,6 +80,7 @@ public class Client {
 							3. View Current Order
 							4. Checkout
 							5. Back to Cuisine
+							6. Exit
 							""");
 
 					System.out.print("Choose option: ");
@@ -123,27 +130,37 @@ public class Client {
 					}
 					case 4 -> {
 						if (order.isEmpty()) {
-							System.out.println("Order is empty. Cannot checkout.");
+							System.out.println("Order is empty. Exiting !!");
+							return;
 						} else {
 							double total = order.getTotal();
 							double discountedTotal = discountManager.applyDiscounts(total);
 
 							System.out.printf("\nOriginal Total: ₹%.2f%n", total);
 							System.out.printf("Discounted Total: ₹%.2f%n", discountedTotal);
-
-							customer.getPaymentMethod().processPayment(discountedTotal);
-
 							String assignedPartner = deliveryPartnerManager.assignPartner();
-
-							order.printInvoice(discountedTotal, customer.getPaymentMethod().getClass().getSimpleName(),
+							boolean payment = true;
+							while(payment)
+							{
+							IPayment paymentProcess = ChoosePaymentMethod.selectPaymentMethod();
+							if(paymentProcess.processPayment(discountedTotal))
+							{
+							order.printInvoice(discountedTotal, paymentProcess.getClass().getSimpleName(),
 									assignedPartner);
 
 							System.out.println("Thank you for ordering with us!");
+							payment = false;
 							return;
-						}
+							}
+							System.out.println("Payment Failed !! Try Another Method");
+						}}
 					}
 					case 5 -> {
 						inCuisine = false; 
+					}
+					case 6 -> {
+						System.out.println("Exiting !!");
+						return;
 					}
 					default -> System.out.println("Invalid option.");
 					}

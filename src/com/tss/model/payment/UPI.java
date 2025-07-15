@@ -17,7 +17,7 @@ public class UPI implements IPayment {
     }
 
     @Override
-    public void processPayment(double amount) {
+    public boolean processPayment(double amount) {
         Scanner scanner = new Scanner(System.in);
         int attempt = 1;
         if (amount > 0) {
@@ -26,18 +26,17 @@ public class UPI implements IPayment {
                 int uPin = scanner.nextInt();
                 if (pin == uPin) {
                     System.out.println("Processing UPI payment of $" + amount + " for UPI ID: " + upiId);
-                    return;
+                    return true;
                 }
                 if (attempt == 5) {
                     System.out.println("You are out of attempts.");
-                    return;
+                    return false;
                 }
                 System.out.println("Wrong PIN. Attempts left: " + (5 - attempt));
                 attempt++;
             }
-        } else {
-            System.out.println("Enter valid amount");
-        }
+        } 
+        return false;
     }
 
     @Override

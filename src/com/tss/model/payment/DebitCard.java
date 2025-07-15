@@ -19,7 +19,7 @@ public class DebitCard implements IPayment {
     }
 
     @Override
-    public void processPayment(double amount) {
+    public boolean processPayment(double amount) {
         Scanner scanner = new Scanner(System.in);
         int attempt = 1;
         if (amount > 0) {
@@ -28,19 +28,19 @@ public class DebitCard implements IPayment {
                 int enteredPin = scanner.nextInt();
                 if (pin == enteredPin) {
                     System.out.println("Processing Debit Card payment of $" + amount + " for card: " + cardNumber);
-                    return;
+                    return true;
                 }
                 if (attempt == 5) {
-                    System.out.println("You are out of attempts.");
-                    return;
+                    System.out.println("Payment Falied");
+                    return false;
                 }
                 System.out.println("Wrong PIN. Attempts left: " + (5 - attempt));
                 attempt++;
             }
-        } else {
-            System.out.println("Enter valid amount");
+        } 
+        return false;
         }
-    }
+    
 
     @Override
     public boolean validatePaymentDetails() {
