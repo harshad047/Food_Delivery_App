@@ -1,4 +1,4 @@
-package com.tss.service;
+package com.tss.model.customer;
 
 import com.tss.model.payment.IPayment;
 

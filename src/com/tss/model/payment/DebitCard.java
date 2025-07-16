@@ -23,11 +23,10 @@ public class DebitCard implements IPayment {
                 System.out.print("Enter PIN: ");
                 int enteredPin = scanner.nextInt();
                 if (pin == enteredPin) {
-                    System.out.println("Processing Debit Card payment of $" + amount + " for card: " + cardNumber);
                     return true;
                 }
                 if (attempt == 5) {
-                    System.out.println("Payment Falied");
+                    System.out.println("DebitCard Blocked");
                     return false;
                 }
                 System.out.println("Wrong PIN. Attempts left: " + (5 - attempt));

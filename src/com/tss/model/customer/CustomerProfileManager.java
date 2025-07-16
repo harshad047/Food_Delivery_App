@@ -1,4 +1,4 @@
-package com.tss.service;
+package com.tss.model.customer;
 
 import java.util.Scanner;
 
@@ -9,9 +9,13 @@ public class CustomerProfileManager {
 
     public static void manageCustomerProfile(Customer customer, Scanner scanner) {
         while (true) {
-            System.out.println("\nCustomer Profile Menu:");
-            System.out.println("1. Change Delivery Address");
-            System.out.println("2. Continue to Main Menu");
+        	System.out.println("\n+------------------------------+");
+        	System.out.println("|    Customer Profile Menu     |");
+        	System.out.println("+------------------------------+");
+        	System.out.printf("| %-28s |\n", "1. Change Delivery Address");
+        	System.out.printf("| %-28s |\n", "2. Proceed to Order");
+        	System.out.println("+------------------------------+");
+
 
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine().trim();

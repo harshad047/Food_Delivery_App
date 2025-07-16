@@ -21,7 +21,6 @@ public class UPI implements IPayment {
 				System.out.print("Enter PIN: ");
 				int uPin = scanner.nextInt();
 				if (pin == uPin) {
-					System.out.println("Processing UPI payment of $" + amount + " for UPI ID: " + upiId);
 					return true;
 				}
 				if (attempt == 5) {

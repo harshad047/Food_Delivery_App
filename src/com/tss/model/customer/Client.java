@@ -1,7 +1,9 @@
-package com.tss.service;
+package com.tss.model.customer;
 
 import java.util.Scanner;
 
+import com.tss.model.Printer.MenuPrinter;
+import com.tss.model.Printer.invoicePrinter;
 import com.tss.model.deliverypartner.DeliveryPartnerManager;
 import com.tss.model.discount.IDiscountManager;
 import com.tss.model.food.FoodCusine;
@@ -9,7 +11,6 @@ import com.tss.model.food.FoodItem;
 import com.tss.model.food.FoodMenu;
 import com.tss.model.food.FoodMenuFactory;
 import com.tss.model.food.IMenu;
-import com.tss.model.menuPrinter.MenuPrinter;
 import com.tss.model.order.Order;
 import com.tss.model.order.OrderItem;
 import com.tss.model.payment.ChoosePaymentMethod;
@@ -39,14 +40,17 @@ public class Client {
 		boolean ordering = true;
 
 		while (ordering) {
-			System.out.println("\nSelect Cuisine: 1. Italian 2. Indian 3. Korean 0. Exit");
+			System.out.println("+-----------------------------------------+");
+			System.out.println("|           Select Cuisine                |");
+			System.out.println("+-----------------------------------------+");
+			System.out.printf("| 1. Italian                              |\n");
+			System.out.printf("| 2. Indian                               |\n");
+			System.out.printf("| 3. Korean                               |\n");
+			System.out.println("+-----------------------------------------+");
+
+			System.out.print("Choose: ");
 			int cuisineChoice = scanner.nextInt();
 			scanner.nextLine();
-
-			if (cuisineChoice == 0) {
-				System.out.println("Goodbye!");
-				return;
-			}
 
 			FoodCusine selected = switch (cuisineChoice) {
 			case 1 -> FoodCusine.ItalianMenu;
@@ -70,18 +74,21 @@ public class Client {
 
 				boolean inCuisine = true;
 				while (inCuisine) {
-					System.out.println("\n---- " + selected + " ----");
+					System.out.println("\n+------------------------+");
+					System.out.printf("| %-23s|\n", selected);
+					System.out.println("+------------------------+");
 					MenuPrinter.printMenu(menu);
 
-					System.out.println("""
-							Options:
-							1. Add Item
-							2. Remove Item
-							3. View Current Order
-							4. Checkout
-							5. Back to Cuisine
-							6. Exit
-							""");
+					System.out.println("+--------------------------+");
+					System.out.println("|         Options          |");
+					System.out.println("+--------------------------+");
+					System.out.println("| 1. Order Item            |");
+					System.out.println("| 2. Remove Item           |");
+					System.out.println("| 3. View Current Order    |");
+					System.out.println("| 4. Checkout              |");
+					System.out.println("| 5. Back to Cuisine       |");
+					System.out.println("| 6. Exit                  |");
+					System.out.println("+--------------------------+");
 
 					System.out.print("Choose option: ");
 					int choice = scanner.nextInt();
@@ -130,8 +137,7 @@ public class Client {
 					}
 					case 4 -> {
 						if (order.isEmpty()) {
-							System.out.println("Order is empty. Exiting !!");
-							return;
+							System.out.println("Order is empty.!!");
 						} else {
 							double total = order.getTotal();
 							double discountedTotal = discountManager.applyDiscounts(total);
@@ -140,23 +146,23 @@ public class Client {
 							System.out.printf("Discounted Total: ₹%.2f%n", discountedTotal);
 							String assignedPartner = deliveryPartnerManager.assignPartner();
 							boolean payment = true;
-							while(payment)
-							{
-							IPayment paymentProcess = ChoosePaymentMethod.selectPaymentMethod();
-							if(paymentProcess.processPayment(discountedTotal))
-							{
-							order.printInvoice(discountedTotal, paymentProcess.getClass().getSimpleName(),
-									assignedPartner);
+							while (payment) {
+								IPayment paymentProcess = ChoosePaymentMethod.selectPaymentMethod();
+								if (paymentProcess.processPayment(discountedTotal)) {
+									invoicePrinter.printInvoice(discountedTotal,
+											paymentProcess.getClass().getSimpleName(), assignedPartner,
+											order.getItems(), order);
 
-							System.out.println("Thank you for ordering with us!");
-							payment = false;
-							return;
+									System.out.println("Thank you for ordering with us!");
+									payment = false;
+									return;
+								}
+								System.out.println("Payment Failed !! Try Another Method");
 							}
-							System.out.println("Payment Failed !! Try Another Method");
-						}}
+						}
 					}
 					case 5 -> {
-						inCuisine = false; 
+						inCuisine = false;
 					}
 					case 6 -> {
 						System.out.println("Exiting !!");

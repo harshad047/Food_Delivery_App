@@ -49,6 +49,7 @@ public abstract class FoodMenu implements IMenu {
     		throw new NoItemInListException();
     	System.out.print("Enter ID to remove: ");
     	int id = scanner.nextInt();
+    	scanner.nextLine();
         boolean isDeleted = false;
         for (FoodItem item : menuItems) {
             if (item.getId() == id) {

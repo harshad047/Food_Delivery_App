@@ -9,11 +9,11 @@ import com.tss.model.discount.DiscountManager;
 import com.tss.model.discount.IDiscountManager;
 import com.tss.model.food.FoodMenuFactory;
 import com.tss.model.repositary.Repositary;
-import com.tss.service.Admin;
-import com.tss.service.Client;
-import com.tss.service.Customer;
-import com.tss.service.CustomerProfileManager;
-import com.tss.service.RegisterCustomer;
+import com.tss.model.admin.Admin;
+import com.tss.model.customer.Client;
+import com.tss.model.customer.Customer;
+import com.tss.model.customer.CustomerProfileManager;
+import com.tss.model.customer.RegisterCustomer;
 
 public class AuthenticationProxy {
 
@@ -21,24 +21,27 @@ public class AuthenticationProxy {
     private static final String ADMIN_PASSWORD = "Fggv@676";
     private static final String CUSTOMER_FILE = "customers.ser";
 
-    public static void authenticateAndStart(String username, String password, Scanner scanner) {
+    public static void authenticateAndStart(String role, String username, String password, Scanner scanner) {
 
         FoodMenuFactory foodMenuFactory = new FoodMenuFactory();
-        IDiscountManager discountManager = new DiscountManager();
+        DiscountManager discountManager = new DiscountManager();
         DeliveryPartnerManager deliveryPartnerManager = new DeliveryPartnerManager();
 
         AuthenticationProxy authProxy = new AuthenticationProxy();
 
-        if (authProxy.isAdmin(username, password)) {
-            Admin admin = new Admin(scanner, foodMenuFactory, discountManager, deliveryPartnerManager);
-            admin.manageAdmin(username);
-        } else {
+        if (role.equalsIgnoreCase("Admin")) {
+            if (authProxy.isAdmin(username, password)) {
+                Admin admin = new Admin(foodMenuFactory, discountManager, deliveryPartnerManager);
+                admin.manageAdmin(username);
+            } else {
+                System.out.println("Invalid Admin credentials. Access denied.");
+            }
+        } else if (role.equalsIgnoreCase("Customer")) {
             Customer existingCustomer = isCustomer(username, password);
             if (existingCustomer != null) {
-                // NEW: Let the customer update profile
                 CustomerProfileManager.manageCustomerProfile(existingCustomer, scanner);
 
-                // Save updated info
+                // Save updated profile
                 List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
                 for (int i = 0; i < customers.size(); i++) {
                     if (customers.get(i).getName().equals(existingCustomer.getName())) {
@@ -50,32 +53,32 @@ public class AuthenticationProxy {
 
                 Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, existingCustomer);
                 client.start();
-                return;
-            }
-
-            System.out.println("No account found.");
-            System.out.print("Do you want to create a new account? (yes/no): ");
-            String choice = scanner.nextLine().trim().toLowerCase();
-            if (choice.equals("no")) {
-                System.out.println("Goodbye!");
-                return;
-            }
-
-            Customer newCustomer = RegisterCustomer.registerNewCustomer(scanner);
-            if (newCustomer != null) {
-                List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
-                if (customers == null) {
-                    customers = new ArrayList<>();
+            } else {
+                System.out.println("No account found.");
+                System.out.print("Do you want to create a new account? (yes/no): ");
+                String choice = scanner.nextLine().trim().toLowerCase();
+                if (choice.equals("no")) {
+                    System.out.println("Goodbye!");
+                    return;
                 }
-                customers.add(newCustomer);
-                Repositary.saveToFile(customers, CUSTOMER_FILE);
 
-                Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, newCustomer);
-                client.start();
-                return;
+                Customer newCustomer = RegisterCustomer.registerNewCustomer(scanner);
+                if (newCustomer != null) {
+                    List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
+                    if (customers == null) {
+                        customers = new ArrayList<>();
+                    }
+                    customers.add(newCustomer);
+                    Repositary.saveToFile(customers, CUSTOMER_FILE);
+
+                    Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, newCustomer);
+                    client.start();
+                } else {
+                    System.out.println("Registration failed. Exiting...");
+                }
             }
-
-            System.out.println("Registration failed. Exiting...");
+        } else {
+            System.out.println("Invalid role specified. Exiting...");
         }
     }
 

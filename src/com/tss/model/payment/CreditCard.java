@@ -23,11 +23,10 @@ public class CreditCard implements IPayment {
                 System.out.print("Enter PIN: ");
                 int enteredPin = scanner.nextInt();
                 if (pin == enteredPin) {
-                    System.out.println("Processing Credit Card payment of $" + amount + " for card: " + cardNumber);
                     return true;
                 }
                 if (attempt == 5) {
-                    System.out.println("You are out of attempts.");
+                    System.out.println("CreditCard Blocked");
                     return false;
                 }
                 System.out.println("Wrong PIN. Attempts left: " + (5 - attempt));

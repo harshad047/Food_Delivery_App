@@ -1,6 +1,5 @@
-package com.tss.model.menuPrinter;
+package com.tss.model.Printer;
 
-import com.tss.model.food.FoodItem;
 import com.tss.model.food.FoodMenu;
 import com.tss.model.food.IMenu;
 
