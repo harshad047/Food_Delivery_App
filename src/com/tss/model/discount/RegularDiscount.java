@@ -14,7 +14,7 @@ public class RegularDiscount implements IDiscount, Serializable {
 
     @Override
     public double applyDiscount(double total) {
-        return total - 50;
+        return total - discountAmount;
     }
 
     public void setDiscountAmount(double discountAmount) {

@@ -38,6 +38,7 @@ public abstract class FoodMenu implements IMenu {
         String description = scanner.nextLine();
         System.out.println("Enter Price: ");
         double price = scanner.nextDouble();
+        scanner.nextLine();
 
         FoodItem item = new FoodItem(foodId, itemName, price, description);
         menuItems.add(item);
@@ -74,7 +75,6 @@ public abstract class FoodMenu implements IMenu {
         }
         for (FoodItem item : menuItems) {
             if (item.getId().equalsIgnoreCase(id)) {
-               
                 System.out.println("Enter Name Of Food Item: ");
                 item.setFoodItemName(scanner.nextLine());
                 System.out.println("Enter Description: ");
