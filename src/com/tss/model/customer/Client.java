@@ -7,6 +7,7 @@ import com.tss.model.Printer.OrderPrinter;
 import com.tss.model.Printer.invoicePrinter;
 import com.tss.model.deliverypartner.DeliveryPartnerManager;
 import com.tss.model.discount.IDiscountManager;
+import com.tss.model.exception.InSufficientQuantityException;
 import com.tss.model.exception.NoItemInListException;
 import com.tss.model.exception.NoSuchItemFoundException;
 import com.tss.model.food.ChooseCousine;
@@ -25,8 +26,8 @@ public class Client {
 	private final DeliveryPartnerManager deliveryPartnerManager;
 	private final Customer customer;
 
-	public Client(Scanner scanner, IDiscountManager discountManager,
-			DeliveryPartnerManager deliveryPartnerManager, Customer customer) {
+	public Client(Scanner scanner, IDiscountManager discountManager, DeliveryPartnerManager deliveryPartnerManager,
+			Customer customer) {
 		this.scanner = scanner;
 		this.discountManager = discountManager;
 		this.deliveryPartnerManager = deliveryPartnerManager;
@@ -50,7 +51,6 @@ public class Client {
 
 				boolean inCuisine = true;
 				while (inCuisine) {
-					
 
 					System.out.println("+--------------------------+");
 					System.out.println("|         Options          |");
@@ -101,10 +101,11 @@ public class Client {
 							System.out.println("Enter Quantity: ");
 							int qty = scanner.nextInt();
 							scanner.nextLine();
-							if(order.removeItem(removeId,qty))
+							if (order.removeItem(removeId, qty)) {
 								System.out.println("Removed. Item With " + removeId);
-							
-						} catch (NoItemInListException | NoSuchItemFoundException e) {
+							}
+
+						} catch (NoItemInListException | NoSuchItemFoundException | InSufficientQuantityException e) {
 							System.out.println(e.getMessage());
 						}
 					}

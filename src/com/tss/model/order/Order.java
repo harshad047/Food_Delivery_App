@@ -3,6 +3,7 @@ package com.tss.model.order;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tss.model.exception.InSufficientQuantityException;
 import com.tss.model.exception.NoItemInListException;
 import com.tss.model.exception.NoSuchItemFoundException;
 
@@ -36,7 +37,7 @@ public class Order {
 		}
 		if(!isexists)
 			throw new NoSuchItemFoundException();
-		return false;
+		throw new InSufficientQuantityException();
 	}
 
 	public double getTotal() {
