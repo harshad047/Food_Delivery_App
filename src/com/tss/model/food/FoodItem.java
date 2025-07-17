@@ -3,22 +3,22 @@ package com.tss.model.food;
 import java.io.Serializable;
 
 public class FoodItem implements Serializable{
-	private int id;
+	private String id;
 	private String FoodItemName;
 	private double price;
 	private String description;
 	
-	public FoodItem(int id, String foodItemName, double price,String description) {
+	public FoodItem(String id, String foodItemName, double price,String description) {
 		super();
 		this.id = id;
 		this.FoodItemName = foodItemName;
 		this.price = price;
 		this.description = description;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getFoodItemName() {

@@ -3,8 +3,8 @@ package com.tss.model.food;
 import java.util.List;
 
 public class FoodMenuFactory {
-	List<FoodItem> menuItems;
-	public IMenu chooseCousine(FoodCusine cousine)
+	static List<FoodItem> menuItems;
+	public static IMenu chooseCousine(FoodCusine cousine)
 	{
 		if(cousine.equals(FoodCusine.ItalianMenu))
 			return new ItalianMenu(menuItems);

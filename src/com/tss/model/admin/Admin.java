@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import com.tss.model.deliverypartner.DeliveryPartnerManager;
 import com.tss.model.discount.DiscountManager;
-import com.tss.model.food.FoodMenuFactory;
 
 public class Admin {
 
@@ -13,8 +12,8 @@ public class Admin {
     private final DiscountManagerAdmin discountManager;
     private final DeliveryPartner deliveryPartner;
 
-    public Admin(FoodMenuFactory foodMenuFactory, DiscountManager discountManager,DeliveryPartnerManager deliveryPartnerManager) {
-        this.foodMenuManager = new FoodMenuManager(foodMenuFactory);
+    public Admin(DiscountManager discountManager,DeliveryPartnerManager deliveryPartnerManager) {
+        this.foodMenuManager = new FoodMenuManager();
         this.discountManager = new DiscountManagerAdmin(discountManager);
         this.deliveryPartner = new DeliveryPartner(deliveryPartnerManager);
     }
@@ -23,8 +22,8 @@ public class Admin {
         boolean adminExit = false;
 
         System.out.println("\n+----------------------------------------+");
-        System.out.printf("|  Welcome %s! You are Admin!!           |\n", userName);
-        System.out.println("+----------------------------------------+");
+        System.out.printf("|              Welcome Admin !!          |");
+        System.out.println("\n+----------------------------------------+");
 
         while (!adminExit) {
             System.out.println("\n+-----------------------------+");

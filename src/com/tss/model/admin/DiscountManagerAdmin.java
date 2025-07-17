@@ -31,18 +31,19 @@ public class DiscountManagerAdmin {
 			scanner.nextLine();
 			switch (choice1) {
 			case 1 -> {
-				System.out.print("Enter new Discount %: ");
+				System.out.print("Enter new Discount : ");
 				double percent = scanner.nextDouble();
 				scanner.nextLine();
-				discountManager.getRegularDiscount().setDiscountPercentage(percent);
+				discountManager.getRegularDiscount().setDiscountAmount(percent);
 				System.out.println("Discount saved.");
 			}
 			case 2 -> {
-				discountManager.getRegularDiscount().setDiscountPercentage(0.0);
-				System.out.println("Discount cleared (set to 0%).");
+				discountManager.getRegularDiscount().setDiscountAmount(0);
+				System.out.println("Discount cleared (set to 0₹).");
 			}
 			case 3 -> System.out.println("Regular Discount: "
-					+ discountManager.getRegularDiscount().getDiscountPercentage() + "%");
+					+ discountManager.getRegularDiscount().getDiscountAmount() + "₹");
+	
 			case 4 -> back = true;
 			default -> System.out.println("Invalid choice.");
 			}

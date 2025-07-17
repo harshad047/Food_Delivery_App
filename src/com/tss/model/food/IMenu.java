@@ -4,6 +4,6 @@ import java.util.List;
 public interface IMenu {
 	void addItem();
 	void removeItem();
-	void editItem(int id);
+	void editItem(String id);
 	 List<FoodItem> getMenuItems();
 }

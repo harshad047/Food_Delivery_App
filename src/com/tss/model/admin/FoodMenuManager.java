@@ -6,44 +6,20 @@ import com.tss.model.Printer.MenuPrinter;
 import com.tss.model.exception.ItemAlreadyExistsException;
 import com.tss.model.exception.NoItemInListException;
 import com.tss.model.exception.NoSuchItemFoundException;
-import com.tss.model.food.FoodCusine;
-import com.tss.model.food.FoodMenuFactory;
+import com.tss.model.food.ChooseCousine;
+
 import com.tss.model.food.IMenu;
 
 public class FoodMenuManager {
 
 	Scanner scanner = new Scanner(System.in);
-	private final FoodMenuFactory foodMenuFactory;
 
-    public FoodMenuManager(FoodMenuFactory foodMenuFactory) {
-        this.foodMenuFactory = foodMenuFactory;
+    public FoodMenuManager() {
     }
 
     public void manageMenu() {
-        System.out.println("+-----------------------------------------+");
-        System.out.println("|           Select Cuisine                |");
-        System.out.println("+-----------------------------------------+");
-        System.out.printf("| 1. Italian                              |\n");
-        System.out.printf("| 2. Indian                               |\n");
-        System.out.printf("| 3. Korean                               |\n");
-        System.out.println("+-----------------------------------------+");
-
-        System.out.print("Choose: ");
-        int cuisineChoice = scanner.nextInt();
-        scanner.nextLine();
-        FoodCusine selected = switch (cuisineChoice) {
-            case 1 -> FoodCusine.ItalianMenu;
-            case 2 -> FoodCusine.IndianMenu;
-            case 3 -> FoodCusine.KoreanMenu;
-            default -> null;
-        };
-
-        if (selected == null) {
-            System.out.println("Invalid cuisine.");
-            return;
-        }
-
-        IMenu menu = foodMenuFactory.chooseCousine(selected);
+        
+        IMenu menu = ChooseCousine.choose();
 
         boolean menuExit = false;
         while (!menuExit) {
@@ -80,7 +56,7 @@ public class FoodMenuManager {
                     try {
                         MenuPrinter.printMenu(menu);
                         System.out.print("Enter ID to edit: ");
-                        menu.editItem(scanner.nextInt());
+                        menu.editItem(scanner.nextLine());
                         scanner.nextLine();
                     } catch (NoItemInListException | NoSuchItemFoundException e) {
                         System.out.println(e.getMessage());

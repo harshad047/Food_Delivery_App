@@ -6,24 +6,24 @@ import com.tss.model.repositary.Repositary;
 public class RegularDiscount implements IDiscount, Serializable {
     private static final long serialVersionUID = 1L;
 
-    private double discountPercentage;
+    private double discountAmount;
 
     public RegularDiscount() {
-        this.discountPercentage = 0.0;
+        this.discountAmount = 0;
     }
 
     @Override
     public double applyDiscount(double total) {
-        return total * (1 - discountPercentage / 100);
+        return total - 50;
     }
 
-    public void setDiscountPercentage(double discountPercentage) {
-        this.discountPercentage = discountPercentage;
+    public void setDiscountAmount(double discountAmount) {
+        this.discountAmount = discountAmount;
         saveDiscount();
     }
 
-    public double getDiscountPercentage() {
-        return this.discountPercentage;
+    public double getDiscountAmount() {
+        return this.discountAmount;
     }
 
     public void saveDiscount() {

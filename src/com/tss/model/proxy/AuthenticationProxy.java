@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 import com.tss.model.deliverypartner.DeliveryPartnerManager;
 import com.tss.model.discount.DiscountManager;
-import com.tss.model.discount.IDiscountManager;
-import com.tss.model.food.FoodMenuFactory;
 import com.tss.model.repositary.Repositary;
 import com.tss.model.admin.Admin;
 import com.tss.model.customer.Client;
@@ -23,7 +21,6 @@ public class AuthenticationProxy {
 
     public static void authenticateAndStart(String role, String username, String password, Scanner scanner) {
 
-        FoodMenuFactory foodMenuFactory = new FoodMenuFactory();
         DiscountManager discountManager = new DiscountManager();
         DeliveryPartnerManager deliveryPartnerManager = new DeliveryPartnerManager();
 
@@ -31,7 +28,7 @@ public class AuthenticationProxy {
 
         if (role.equalsIgnoreCase("Admin")) {
             if (authProxy.isAdmin(username, password)) {
-                Admin admin = new Admin(foodMenuFactory, discountManager, deliveryPartnerManager);
+                Admin admin = new Admin(discountManager, deliveryPartnerManager);
                 admin.manageAdmin(username);
             } else {
                 System.out.println("Invalid Admin credentials. Access denied.");
@@ -41,7 +38,6 @@ public class AuthenticationProxy {
             if (existingCustomer != null) {
                 CustomerProfileManager.manageCustomerProfile(existingCustomer, scanner);
 
-                // Save updated profile
                 List<Customer> customers = Repositary.readFromFile(CUSTOMER_FILE);
                 for (int i = 0; i < customers.size(); i++) {
                     if (customers.get(i).getName().equals(existingCustomer.getName())) {
@@ -51,7 +47,7 @@ public class AuthenticationProxy {
                 }
                 Repositary.saveToFile(customers, CUSTOMER_FILE);
 
-                Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, existingCustomer);
+                Client client = new Client(scanner, discountManager, deliveryPartnerManager, existingCustomer);
                 client.start();
             } else {
                 System.out.println("No account found.");
@@ -71,7 +67,7 @@ public class AuthenticationProxy {
                     customers.add(newCustomer);
                     Repositary.saveToFile(customers, CUSTOMER_FILE);
 
-                    Client client = new Client(scanner, foodMenuFactory, discountManager, deliveryPartnerManager, newCustomer);
+                    Client client = new Client(scanner, discountManager, deliveryPartnerManager, newCustomer);
                     client.start();
                 } else {
                     System.out.println("Registration failed. Exiting...");
