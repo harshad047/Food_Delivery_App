@@ -42,7 +42,9 @@ public class Admin {
                 case 1 -> foodMenuManager.manageMenu();
                 case 2 -> discountManager.manageDiscount();
                 case 3 -> deliveryPartner.manageDeliveryPartners();
-                case 4 -> adminExit = true;
+                case 4 -> {
+                	System.out.println("ThankYou Admin !!");
+                	adminExit = true;}
                 default -> System.out.println("Invalid choice!");
             }
         }

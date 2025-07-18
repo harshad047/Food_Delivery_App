@@ -6,6 +6,7 @@ import com.tss.model.Printer.MenuPrinter;
 import com.tss.model.exception.ItemAlreadyExistsException;
 import com.tss.model.exception.NoItemInListException;
 import com.tss.model.exception.NoSuchItemFoundException;
+import com.tss.model.exception.PriceInvalidException;
 import com.tss.model.food.ChooseCousine;
 
 import com.tss.model.food.IMenu;
@@ -40,7 +41,7 @@ public class FoodMenuManager {
                 case 1 -> {
                     try {
                         menu.addItem();
-                    } catch (ItemAlreadyExistsException e) {
+                    } catch (ItemAlreadyExistsException | PriceInvalidException e) {
                         System.out.println(e.getMessage());
                     }
                 }

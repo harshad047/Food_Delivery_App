@@ -12,6 +12,8 @@ public class FoodMenuTest {
         System.out.println("|         Welcome to Gir Gamthi!      |");
         System.out.println("+=====================================+\n");
 
+        while(true)
+        {
         System.out.println("Choose Who You Are:");
         System.out.println("+-------------------------------------+");
         System.out.println("| 1. Admin Login                      |");
@@ -36,6 +38,7 @@ public class FoodMenuTest {
         if (choice==0) {
         	System.out.println("Exiting !!");
         	scanner.close();
+        	System.exit(0);
             return;
         }
 
@@ -52,7 +55,6 @@ public class FoodMenuTest {
         System.out.println("Authenticating, please wait...\n");
 
         AuthenticationProxy.authenticateAndStart(role, username, password, scanner);
-
-        scanner.close();
+        }
     }
 }

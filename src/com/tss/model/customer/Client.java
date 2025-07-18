@@ -1,7 +1,6 @@
 package com.tss.model.customer;
 
 import java.util.Scanner;
-
 import com.tss.model.Printer.MenuPrinter;
 import com.tss.model.Printer.OrderPrinter;
 import com.tss.model.Printer.InvoicePrinter;
@@ -79,9 +78,9 @@ public class Client {
 						int qty = scanner.nextInt();
 						scanner.nextLine();
 
-						if(qty==0)
+						if(qty<=0)
 						{
-							System.out.println("Quantity Can't be Zero !!");
+							System.out.println("Quantity Can't be Zero Or Negative !!");
 							break;
 						}
 						boolean found = false;
@@ -89,7 +88,7 @@ public class Client {
 							if (item.getId().equalsIgnoreCase(addId)) {
 								order.addItem(
 										new OrderItem(item.getId(), item.getFoodItemName(), item.getPrice(), qty));
-								System.out.println("Added: " + item.getFoodItemName());
+								System.out.println("Added: " + item.getFoodItemName()+" X "+qty);
 								found = true;
 								break;
 							}

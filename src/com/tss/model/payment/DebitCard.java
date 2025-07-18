@@ -20,7 +20,7 @@ public class DebitCard implements IPayment {
         int attempt = 1;
         if (amount > 0) {
             while (attempt <= 5) {
-                System.out.print("Enter PIN: ");
+                System.out.print("ReEnter PIN: ");
                 int enteredPin = scanner.nextInt();
                 if (pin == enteredPin) {
                     return true;

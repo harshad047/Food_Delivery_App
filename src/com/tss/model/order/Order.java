@@ -57,6 +57,10 @@ public class Order {
 	}
 
 	public double getTotal() {
+		if(items.isEmpty())
+		{
+			throw new NoItemInListException();
+		}
 		double total = 0;
 		for (OrderItem item : items) {
 			total += item.getSubtotal();

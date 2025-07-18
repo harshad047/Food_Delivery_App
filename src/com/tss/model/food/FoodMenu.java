@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.tss.model.exception.ItemAlreadyExistsException;
 import com.tss.model.exception.NoItemInListException;
 import com.tss.model.exception.NoSuchItemFoundException;
+import com.tss.model.exception.PriceInvalidException;
 import com.tss.model.repositary.Repositary;
 
 public abstract class FoodMenu implements IMenu {
@@ -56,9 +57,11 @@ public abstract class FoodMenu implements IMenu {
         System.out.print("Enter Price: ");
         double price = scanner.nextDouble();
         scanner.nextLine();
-
+        if(price<=0)
+        {
+        	throw new PriceInvalidException();
+        }
         FoodItem item = new FoodItem(foodId, itemName, price, description);
-        id++;
         menuItems.add(item);
         saveToFile();
         System.out.println(itemName + " added to " + cusineName + " Menu!");

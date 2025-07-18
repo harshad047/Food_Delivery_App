@@ -20,25 +20,31 @@ public class DeliveryPartnerManager implements IDeliveryPartnerManager, Serializ
 			this.partners = new ArrayList<>(loaded);
 			return;
 		}
-		if(loaded.size()==0)
-		{
-		this.partners = new ArrayList<>(Arrays.asList("Swiggy", "Zomato"));
-		saveToFile();
+		if (loaded.size() == 0) {
+			this.partners = new ArrayList<>(Arrays.asList("Swiggy", "Zomato"));
+			saveToFile();
 		}
 		this.partners = new ArrayList<>();
 	}
 
 	@Override
 	public void addPartner(String name) {
+		boolean exists = partners.stream().anyMatch(p -> p.equalsIgnoreCase(name));
+
+		if (exists) {
+			System.out.println("Partner \"" + name + "\" is already there.");
+			return;
+		}
 		partners.add(name);
 		saveToFile();
+		System.out.println("Partner \"" + name + "\" added successfully.");
+
 	}
 
 	@Override
 	public void removePartner(int index) {
-		
-		if(partners.size()==1)
-		{
+
+		if (partners.size() == 1) {
 			System.out.println("Only One Delivery Partner is there Cannot Remove");
 			return;
 		}

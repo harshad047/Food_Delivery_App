@@ -24,7 +24,7 @@ public class ChoosePaymentMethod {
 				scanner.nextLine();
 				System.out.print("Enter Card Holder Name: ");
 				String holder = scanner.nextLine();
-				System.out.print("Enter 4-digit PIN: ");
+				System.out.print("Set PIN(4-digit): ");
 				int pin = scanner.nextInt();
 				scanner.nextLine();
 				payment = new DebitCard(cardNumber, holder, pin);
@@ -35,7 +35,7 @@ public class ChoosePaymentMethod {
 				scanner.nextLine();
 				System.out.print("Enter Card Holder Name: ");
 				String holder = scanner.nextLine();
-				System.out.print("Enter 4-digit PIN: ");
+				System.out.print("Set PIN(4-digit): ");
 				int pin = scanner.nextInt();
 				scanner.nextLine();
 				payment = new CreditCard(cardNumber, holder, pin);
@@ -43,7 +43,7 @@ public class ChoosePaymentMethod {
 			case 3 -> {
 				System.out.print("Enter UPI ID: ");
 				String upiId = scanner.nextLine();
-				System.out.print("Enter 4-digit PIN: ");
+				System.out.print("Set PIN(4-digit): ");
 				int pin = scanner.nextInt();
 				scanner.nextLine();
 				payment = new UPI(upiId, pin);

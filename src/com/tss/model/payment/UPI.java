@@ -18,7 +18,7 @@ public class UPI implements IPayment {
 		int attempt = 1;
 		if (amount > 0) {
 			while (attempt <= 5) {
-				System.out.print("Enter PIN: ");
+				System.out.print("ReEnter PIN: ");
 				int uPin = scanner.nextInt();
 				if (pin == uPin) {
 					return true;

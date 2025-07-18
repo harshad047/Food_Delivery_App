@@ -5,7 +5,6 @@ public class DiscountManager implements IDiscountManager {
     private RegularDiscount regularDiscount;
 
     public DiscountManager() {
-        // Always load the saved discount when the manager is created
         this.regularDiscount = RegularDiscount.loadDiscount();
     }
 

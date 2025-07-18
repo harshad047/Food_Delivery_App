@@ -31,7 +31,6 @@ public class DeliveryPartner {
 				System.out.print("Enter new Partner Name: ");
 				String name = scanner.nextLine();
 				deliveryPartner.addPartner(name);
-				System.out.println("Partner added.");
 			}
 			case 2 -> {
 				System.out.println("Current Partners:");
@@ -49,8 +48,15 @@ public class DeliveryPartner {
 				System.out.println("Delivery Partners:");
 				String[] partners = deliveryPartner.getPartners();
 				for (String p : partners) {
-					System.out.println(p);
+				    int len = p.length();
+				    String horizontal = "+" + "-".repeat(len + 2) + "+";
+				    String line = "| " + p + " |";
+
+				    System.out.println(horizontal);
+				    System.out.println(line);
+				    System.out.println(horizontal);
 				}
+
 			}
 			case 4 -> back = true;
 			default -> System.out.println("Invalid choice.");
