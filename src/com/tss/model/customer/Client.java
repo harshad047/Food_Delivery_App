@@ -79,6 +79,11 @@ public class Client {
 						int qty = scanner.nextInt();
 						scanner.nextLine();
 
+						if(qty==0)
+						{
+							System.out.println("Quantity Can't be Zero !!");
+							break;
+						}
 						boolean found = false;
 						for (FoodItem item : fm.getMenuItems()) {
 							if (item.getId().equalsIgnoreCase(addId)) {
