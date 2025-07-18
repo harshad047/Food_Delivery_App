@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import com.tss.model.Printer.MenuPrinter;
 import com.tss.model.Printer.OrderPrinter;
-import com.tss.model.Printer.invoicePrinter;
+import com.tss.model.Printer.InvoicePrinter;
 import com.tss.model.deliverypartner.DeliveryPartnerManager;
 import com.tss.model.discount.IDiscountManager;
 import com.tss.model.exception.InSufficientQuantityException;
@@ -126,7 +126,7 @@ public class Client {
 							while (payment) {
 								IPayment paymentProcess = ChoosePaymentMethod.selectPaymentMethod();
 								if (paymentProcess.processPayment(discountedTotal)) {
-									invoicePrinter.printInvoice(discountedTotal,
+									InvoicePrinter.printInvoice(discountedTotal,
 											paymentProcess.getClass().getSimpleName(), assignedPartner,
 											order.getItems(), order);
 

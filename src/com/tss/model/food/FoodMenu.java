@@ -13,6 +13,7 @@ public abstract class FoodMenu implements IMenu {
     protected List<FoodItem> menuItems;
     protected String cusineName;
     protected Scanner scanner = new Scanner(System.in);
+    protected int id;
 
     public FoodMenu(List<FoodItem> menuItems, String cuisineName) {
         this.menuItems = new ArrayList<>();
@@ -20,27 +21,44 @@ public abstract class FoodMenu implements IMenu {
         loadFromFile();
     }
 
-    @Override
-    public void addItem() {
-        System.out.print("Enter Id Of Food Item: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+    private String generateId()
+    {
+    	int maxId = 0;
+        for (FoodItem item : menuItems) {
+            String idStr = item.getId().substring(2); 
+            try {
+                int itemId = Integer.parseInt(idStr);
+                if (itemId > maxId) {
+                    maxId = itemId;
+                }
+            } catch (NumberFormatException e) {
+              
+            }
+        }
+        this.id = maxId + 1;
         
         String foodId = cusineName.substring(0, 2).toUpperCase()+id;
+        
+        return foodId;
+    }
+    @Override
+    public void addItem() {
+    	String foodId = generateId();
         for (FoodItem foodItem : menuItems) {
             if (foodItem.getId().equalsIgnoreCase(foodId)) {
                 throw new ItemAlreadyExistsException(id, foodItem.getFoodItemName());
             }
         }
-        System.out.println("Enter Name Of Food Item: ");
+        System.out.print("Enter Name Of Food Item: ");
         String itemName = scanner.nextLine();
-        System.out.println("Enter Description: ");
+        System.out.print("Enter Description: ");
         String description = scanner.nextLine();
-        System.out.println("Enter Price: ");
+        System.out.print("Enter Price: ");
         double price = scanner.nextDouble();
         scanner.nextLine();
 
         FoodItem item = new FoodItem(foodId, itemName, price, description);
+        id++;
         menuItems.add(item);
         saveToFile();
         System.out.println(itemName + " added to " + cusineName + " Menu!");
@@ -52,7 +70,6 @@ public abstract class FoodMenu implements IMenu {
     		throw new NoItemInListException();
     	System.out.print("Enter ID to remove: ");
     	String id = scanner.nextLine();
-    	scanner.nextLine();
         boolean isDeleted = false;
         for (FoodItem item : menuItems) {
             if (item.getId().equalsIgnoreCase(id)) {
@@ -75,11 +92,11 @@ public abstract class FoodMenu implements IMenu {
         }
         for (FoodItem item : menuItems) {
             if (item.getId().equalsIgnoreCase(id)) {
-                System.out.println("Enter Name Of Food Item: ");
+                System.out.print("Enter Name Of Food Item: ");
                 item.setFoodItemName(scanner.nextLine());
-                System.out.println("Enter Description: ");
+                System.out.print("Enter Description: ");
                 item.setDescription(scanner.nextLine());
-                System.out.println("Enter Price: ");
+                System.out.print("Enter Price: ");
                 item.setPrice(scanner.nextDouble());
                 saveToFile();
                 return;

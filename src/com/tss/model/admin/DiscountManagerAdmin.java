@@ -31,7 +31,7 @@ public class DiscountManagerAdmin {
 			scanner.nextLine();
 			switch (choice1) {
 			case 1 -> {
-				System.out.print("Enter new Discount : ");
+				System.out.print("Enter new Discount in (₹): ");
 				double percent = scanner.nextDouble();
 				scanner.nextLine();
 				discountManager.getRegularDiscount().setDiscountAmount(percent);
@@ -39,7 +39,7 @@ public class DiscountManagerAdmin {
 			}
 			case 2 -> {
 				discountManager.getRegularDiscount().setDiscountAmount(0);
-				System.out.println("Discount cleared (set to 0₹).");
+				System.out.println("Discount cleared (set to 0 ₹).");
 			}
 			case 3 -> System.out.println("Regular Discount: "
 					+ discountManager.getRegularDiscount().getDiscountAmount() + "₹");
